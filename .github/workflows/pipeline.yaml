@@ -1,6 +1,10 @@
-name: Test & Deploy
+name: Test & Deploy API
 
 on: [push]
+
+defaults:
+  run:
+    working-directory: server
 
 jobs:
   test:
