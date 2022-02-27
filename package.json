@@ -6,7 +6,7 @@
   "author": "Raph Hennessy",
   "license": "GPL-3.0-only",
   "scripts": {
-    "tsc": "tsc",
+    "build": "tsc",
     "start": "tsc && node dist/",
     "dev": "nodemon --watch src/ --exec \"npm start\" --verbose -e ts",
     "test": "echo // TODO: add tests"
