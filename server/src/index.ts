@@ -1,24 +1,23 @@
+import 'dotenv/config';
 import Koa from "koa";
-import Router from "koa-router";
 import logger from "koa-logger";
 import json from "koa-json";
+import bodyParser from 'koa-bodyparser';
+
+import * as env from './env';
+import * as routes from './rest';
 
 const app = new Koa();
-const router = new Router();
-
-router.get("/", async (ctx, next) => {
-  ctx.body = {
-    msg: 'Hello World!'
-  }
-
-  await next();
-})
 
 app.use(json());
 app.use(logger());
+app.use(bodyParser());
 
-app.use(router.routes()).use(router.allowedMethods());
+for (const route of Object.values(routes)) {
+  app.use(route.routes());
+  app.use(route.allowedMethods());
+}
 
-app.listen(3000, () => {
-  console.info("Koa started");
+app.listen(env.PORT, () => {
+  console.info(`Server started on port ${env.PORT}`);
 })

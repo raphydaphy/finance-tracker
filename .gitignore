@@ -6,3 +6,5 @@
 
 # Sensitive
 *.env
+
+*.log
