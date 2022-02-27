@@ -50,7 +50,7 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
 
     env:
-      PROJECT_ID: finance-tracker
+      PROJECT_ID: finance-tracker-342602
       SERVICE_NAME: api
 
     steps:
@@ -77,7 +77,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0.2.0
         with:
           service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
-          project_id: finance-tracker
+          project_id: finance-tracker-342602
           export_default_credentials: true
 
       - name: Configure GCP
