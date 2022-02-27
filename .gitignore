@@ -7,4 +7,9 @@
 # Sensitive
 *.env
 
+# Logs
 *.log
+
+# Node
+dist/
+node_modules/
