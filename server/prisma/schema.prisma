@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @db.Uuid @default(uuid())
+  name String @unique
+  email String @unique
+  createdAt DateTime @default(now())
+
+  webhooks UpWebhook[]
+  bankAccounts BankAccount[]
+  transactions Transaction[]
+}
+
+model UpWebhook {
+  id String @id @db.Uuid @default(uuid())
+  remoteId String @unique
+
+  createdAt DateTime @default(now())
+
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id])
+}
+
+model BankAccount {
+  id String @id @db.Uuid @default(uuid())
+  remoteId String @unique
+
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  displayName String
+  accountType String
+
+  // All balances are stored in cents
+  currency String
+  balance Int @default(0)
+
+  transactions Transaction[]
+}
+
+model Transaction {
+  id String @id @db.Uuid @default(uuid())
+  remoteId String @unique
+
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id])
+
+  bankAccountId String @db.Uuid
+  bankAccount BankAccount @relation(fields: [bankAccountId], references: [id])
+
+  createdAt DateTime @default(now())
+  settledAt DateTime?
+
+  description String?
+  message String?
+
+  currency String
+  amount Int
+
+  foreignCurrency String?
+  foreignAmount Int?
+}
